@@ -111,13 +111,15 @@ bool query_gl_GLX(void)
 #elif @GLFW3_FOUND@
 bool query_gl_GLFW3(void)
 {
-	if(!glfwInit()) return true;
+	if(GL_FALSE == glfwInit()) {
+		return false;
+	}
 
 	GLFWwindow* win = glfwCreateWindow(64, 64, title, NULL, NULL);
 	if(!win)
 	{
 		glfwTerminate();
-		return true;
+		return false;
 	}
 	glfwMakeContextCurrent(win);
 	oglplus::GLAPIInitializer gl_api;
