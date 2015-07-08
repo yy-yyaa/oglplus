@@ -8,7 +8,7 @@
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  *
- *  @oglplus_example_uses_gl{GL_VERSION_3_3}
+ *  @oglplus_example_uses_gl{GL_VERSION_4_3}
  */
 #include <oglplus/gl.hpp>
 #include <oglplus/all.hpp>
@@ -120,7 +120,8 @@ public:
 			std::vector<GLfloat> matrix_data(max_cubes*16);
 			auto p = matrix_data.begin(), e = matrix_data.end();
 
-			Angle<GLfloat> angle, astep = Angle<GLfloat>::Degrees(360.0f/float(max_cubes));
+			Angle<GLfloat> angle;
+			Angle<GLfloat> astep = Degrees(360.0f/float(max_cubes));
 			while(p != e)
 			{
 				GLfloat cx = Cos(angle);
