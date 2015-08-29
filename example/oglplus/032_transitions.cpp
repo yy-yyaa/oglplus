@@ -4,7 +4,7 @@
  *
  *  @oglplus_screenshot{032_transitions}
  *
- *  Copyright 2008-2014 Matus Chochlik. Distributed under the Boost
+ *  Copyright 2008-2015 Matus Chochlik. Distributed under the Boost
  *  Software License, Version 1.0. (See accompanying file
  *  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
  *
@@ -41,7 +41,7 @@ private:
 
 		prog.AttachShader(VertexShader(
 			ObjectDesc("Draw vertex"),
-			StrCRef("#version 330\n"
+			StrCRef("#version 150\n"
 			"uniform vec3 LightPosition;"
 			"uniform mat4 ModelMatrix;"
 			"in vec4 Position;"
@@ -70,7 +70,7 @@ private:
 
 		prog.AttachShader(GeometryShader(
 			ObjectDesc("Draw geometry"),
-			StrCRef("#version 330\n"
+			StrCRef("#version 150\n"
 			"layout(triangles) in;"
 			"layout(triangle_strip, max_vertices = 6) out;"
 
@@ -120,7 +120,7 @@ private:
 
 		prog.AttachShader(FragmentShader(
 			ObjectDesc("Draw fragment"),
-			StrCRef("#version 330\n"
+			StrCRef("#version 150\n"
 			"uniform sampler2D MetalTexture;"
 			"in vec3 geomNormal;"
 			"in vec3 geomTangent;"
@@ -199,8 +199,7 @@ public:
 			.GenerateMipmap()
 			.MinFilter(TextureMinFilter::LinearMipmapLinear)
 			.MagFilter(TextureMagFilter::Linear)
-			.WrapS(TextureWrap::Repeat)
-			.WrapT(TextureWrap::Repeat);
+			.Wrap(TextureWrap::Repeat);
 	}
 };
 
@@ -213,10 +212,8 @@ public:
 		Texture::Active(unit);
 		oglplus::Context::Bound<Texture>(Texture::Target::_2D, *this)
 			.Image2D(images::RandomRedUByte(512, 512))
-			.MinFilter(TextureMinFilter::Linear)
-			.MagFilter(TextureMagFilter::Linear)
-			.WrapS(TextureWrap::Repeat)
-			.WrapT(TextureWrap::Repeat);
+			.Filter(TextureFilter::Linear)
+			.Wrap(TextureWrap::Repeat);
 	}
 };
 
@@ -231,19 +228,13 @@ public:
 	{
 		Texture::Active(depth_unit);
 		oglplus::Context::Bound(Texture::Target::_2DArray, depth_tex)
-			.MinFilter(TextureMinFilter::Linear)
-			.MagFilter(TextureMagFilter::Linear)
-			.WrapS(TextureWrap::ClampToEdge)
-			.WrapT(TextureWrap::ClampToEdge)
-			.WrapR(TextureWrap::ClampToEdge);
+			.Filter(TextureFilter::Linear)
+			.Wrap(TextureWrap::ClampToEdge);
 
 		Texture::Active(color_unit);
 		oglplus::Context::Bound(Texture::Target::_2DArray, color_tex)
-			.MinFilter(TextureMinFilter::Linear)
-			.MagFilter(TextureMagFilter::Linear)
-			.WrapS(TextureWrap::ClampToEdge)
-			.WrapT(TextureWrap::ClampToEdge)
-			.WrapR(TextureWrap::ClampToEdge);
+			.Filter(TextureFilter::Linear)
+			.Wrap(TextureWrap::ClampToEdge);
 
 		Resize(256, 256);
 	}
@@ -289,7 +280,7 @@ private:
 
 		prog.AttachShader(VertexShader(
 			ObjectDesc("Clear vertex"),
-			StrCRef("#version 330\n"
+			StrCRef("#version 150\n"
 			"in vec4 Position;"
 			"void main(void)"
 			"{"
@@ -299,7 +290,7 @@ private:
 
 		prog.AttachShader(GeometryShader(
 			ObjectDesc("Clear geometry"),
-			StrCRef("#version 330\n"
+			StrCRef("#version 150\n"
 			"layout(triangles) in;"
 			"layout(triangle_strip, max_vertices = 6) out;"
 
@@ -331,7 +322,7 @@ private:
 
 		prog.AttachShader(FragmentShader(
 			ObjectDesc("Clear fragment"),
-			StrCRef("#version 330\n"
+			StrCRef("#version 150\n"
 
 			"in vec3 geomColor1, geomColor2;"
 			"in vec2 geomPosition, geomOrigin;"

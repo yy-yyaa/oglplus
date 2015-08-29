@@ -37,7 +37,7 @@ public:
 	VolumeVertShader(void)
 	 : VertexShader(
 		ObjectDesc("Volume vertex shader"),
-		StrCRef("#version 330\n"
+		StrCRef("#version 150\n"
 		"uniform sampler3D VolumeTex;"
 		"uniform float Threshold;"
 		"uniform float GridStep;"
@@ -74,7 +74,7 @@ public:
 	VolumeGeomShader(void)
 	 : GeometryShader(
 		ObjectDesc("Volume geometry shader"),
-		StrCRef("#version 330\n"
+		StrCRef("#version 150\n"
 		"layout(triangles_adjacency) in;"
 		"layout(triangle_strip, max_vertices = 4) out;"
 
@@ -215,7 +215,7 @@ public:
 	VolumeFragShader(void)
 	 : FragmentShader(
 		ObjectDesc("Volume fragment shader"),
-		StrCRef("#version 330\n"
+		StrCRef("#version 150\n"
 
 		"in vec3 geomNormal, geomLightDir, geomViewDir;"
 
@@ -362,12 +362,9 @@ public:
 		Texture::Active(0);
 		volume_prog.volume_tex = 0;
 		gl.Bound(Texture::Target::_3D, volume_tex)
-			.MinFilter(TextureMinFilter::Linear)
-			.MagFilter(TextureMagFilter::Linear)
+			.Filter(TextureFilter::Linear)
 			.BorderColor(Vec4f(0.0f, 0.0f, 0.0f, 0.0f))
-			.WrapS(TextureWrap::ClampToBorder)
-			.WrapT(TextureWrap::ClampToBorder)
-			.WrapR(TextureWrap::ClampToBorder)
+			.Wrap(TextureWrap::ClampToBorder)
 			.Image3D(
 				images::Cloud(
 					128, 128, 128,

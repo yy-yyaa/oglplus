@@ -31,7 +31,7 @@ public:
 template <>
 class __ObjectOps<__tag_DirectState, __tag_ProgramPipeline>
  : public __ObjZeroOps<__tag_DirectState, __tag_ProgramPipeline> /*<
-Indirectly inherits from __ObjCommonOps_ProgramPipeline.
+Indirectly inherits from __ObjCommonOps_ProgramPipeline<__tag_ProgramPipeline>.
 >*/
 {
 public:
@@ -86,11 +86,13 @@ public:
 	See [glfunc GetProgramPipeline], [glconst VALIDATE_STATUS].
 	>*/
 
-	void Validate(void) const; /*<
+	ObjectOps& Validate(void); /*<
 	Validates this program pipeline.
 	Throws __ValidationError on failure.
 	See [glfunc ValidateProgramPipeline].
 	>*/
+
+	__Outcome<ObjectOps&> Validate(std::nothrow_t);
 
 	void ActiveShaderProgram(__ProgramName program) const; /*<
 	Make the [^program] active for this program pipeline.
@@ -120,7 +122,7 @@ typedef ObjectOps<__tag_DirectState, __tag_ProgramPipeline>
 typedef __Object<ProgramPipelineOps> ProgramPipeline;
 
 typedef __ObjectZero<__ObjZeroOps<__tag_DirectState, __tag_ProgramPipeline>> /*<
-Indirectly inherits from __ObjCommonOps_ProgramPipeline.
+Indirectly inherits from __ObjCommonOps_ProgramPipeline<__tag_ProgramPipeline>.
 >*/
 	NoProgramPipeline;
 

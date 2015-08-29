@@ -61,7 +61,7 @@ public:
 	CommonVertShader(void)
 	 : VertexShader(
 		ObjectDesc("Common vertex shader"),
-		StrCRef("#version 330\n"
+		StrCRef("#version 150\n"
 		"uniform mat4 ModelMatrix;"
 		"uniform mat3 TextureMatrix;"
 		"uniform vec3 CameraPosition, LightPosition;"
@@ -101,7 +101,7 @@ public:
 	DefaultGeomShader(void)
 	 : GeometryShader(
 		ObjectDesc("Default geometry shader"),
-		StrCRef("#version 330\n"
+		StrCRef("#version 150\n"
 		"layout(triangles) in;"
 		"layout(triangle_strip, max_vertices = 3) out;"
 		"uniform mat4 CameraMatrix, ProjectionMatrix;"
@@ -158,7 +158,7 @@ public:
 	CubemapGeomShader(void)
 	 : GeometryShader(
 		ObjectDesc("Cubemap geometry shader"),
-		StrCRef("#version 330\n"
+		StrCRef("#version 150\n"
 		"layout(triangles) in;"
 		"layout(triangle_strip, max_vertices = 18) out;"
 		"uniform mat4 ProjectionMatrix, CameraMatrix;"
@@ -289,7 +289,7 @@ public:
 	ClothFragmentShader(void)
 	 : FragmentShader(
 		ObjectDesc("Cloth fragment shader"),
-		StrCRef("#version 330\n"
+		StrCRef("#version 150\n"
 		"uniform vec3 Color1, Color2;"
 		"uniform sampler2D ClothTex, LightMap;"
 		"in vec3 geomNormal;"
@@ -371,7 +371,7 @@ public:
 	BallFragmentShader(void)
 	 : FragmentShader(
 		ObjectDesc("Ball fragment shader"),
-		StrCRef("#version 330\n"
+		StrCRef("#version 150\n"
 		"uniform vec3 Color1, Color2;"
 		"uniform sampler2DArray NumberTex;"
 		"uniform samplerCube ReflectTex;"
@@ -459,7 +459,7 @@ public:
 	LightmapVertShader(void)
 	 : VertexShader(
 		ObjectDesc("Lightmap vertex shader"),
-		StrCRef("#version 330\n"
+		StrCRef("#version 150\n"
 		"uniform mat4 TransformMatrix;"
 		"in vec4 Position;"
 		"out vec3 vertPosition;"
@@ -479,7 +479,7 @@ public:
 	LightmapFragShader(void)
 	 : FragmentShader(
 		ObjectDesc("Lightmap fragment shader"),
-		StrCRef("#version 330\n"
+		StrCRef("#version 150\n"
 		"uniform vec3 LightPosition;"
 		"uniform vec3 BallPositions[" OGLPLUS_EXAMPLE_034BB_BALL_COUNT_TXT "];"
 		"in vec3 vertPosition;"
@@ -764,9 +764,7 @@ public:
 				.BorderColor(Vec4f(0,0,0,0))
 				.MinFilter(TextureMinFilter::LinearMipmapLinear)
 				.MagFilter(TextureMagFilter::Linear)
-				.WrapS(TextureWrap::ClampToBorder)
-				.WrapT(TextureWrap::ClampToBorder)
-				.WrapR(TextureWrap::ClampToBorder);
+				.Wrap(TextureWrap::ClampToBorder);
 
 			for(GLuint i=0; i!=ball_count; ++i)
 			{
@@ -838,11 +836,8 @@ public:
 		for(GLuint b=0; b!=ball_count; ++b)
 		{
 			gl.Bound(Texture::Target::CubeMap, cubemaps[b])
-				.MinFilter(TextureMinFilter::Linear)
-				.MagFilter(TextureMagFilter::Linear)
-				.WrapS(TextureWrap::ClampToEdge)
-				.WrapT(TextureWrap::ClampToEdge)
-				.WrapR(TextureWrap::ClampToEdge);
+				.Filter(TextureFilter::Linear)
+				.Wrap(TextureWrap::ClampToEdge);
 
 			for(int f=0; f!=6; ++f)
 			{
@@ -912,11 +907,8 @@ public:
 		Texture::Active(4);
 		Texture z_buffer;
 		gl.Bound(Texture::Target::CubeMap, z_buffer)
-			.MinFilter(TextureMinFilter::Nearest)
-			.MagFilter(TextureMagFilter::Nearest)
-			.WrapS(TextureWrap::ClampToEdge)
-			.WrapT(TextureWrap::ClampToEdge)
-			.WrapR(TextureWrap::ClampToEdge);
+			.Filter(TextureFilter::Nearest)
+			.Wrap(TextureWrap::ClampToEdge);
 
 		for(int i=0; i!=6; ++i)
 		{
